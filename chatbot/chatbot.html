@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krishi Sakhi/ Chatbot</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/chat-bot.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo"><img src="../img/log1.png" id="logo-img" alt="" srcset=""></div>
+    <div class="title"><h1>Krishi Sakhi</h1></div>
+  </header>
+
+  <!-- Chat Section -->
+  <div class="chat-container">
+    <!-- Chat Window -->
+    <div class="chat-window" id="chat-window">
+      <div class="bot-message">👋 Hello! I am Sakhi Bot.</div>
+    </div>
+
+    <!-- History Panel -->
+    <div class="history-panel">
+      <h3>History</h3>
+      <ul id="history-list"></ul>
+    </div>
+  </div>
+
+  <!-- Input Box -->
+  <div class="input-area">
+    <input type="text" id="user-input" placeholder="Type your question..." />
+    <button id="send-btn">Send</button>
+  </div>
+
+  <script src="../js/chat-bot.js"></script>
+</body>
+</html>
