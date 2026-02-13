@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KRISHI SAKHI - Your Prosperity Our Purpose </title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo"><img src="img/log1.png" id="logo-img" alt="" srcset=""></div>
+    <div class="title"><h1>KRISHI Sakhi</h1></div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="slogan">  <h2>Your Prosperity Our Purpose</h2> </div>
+    <h1>Smart AI Chatbot for Farmers</h1>
+    <p>Get instant answers to your queries in your own language.</p>
+    <a href="chatbot/chatbot.html" class="cta-btn">Start Chatbot</a>
+
+
+
+
+<!-- Hidden inputs -->
+<input type="file" id="docInput" style="display:none;" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt">
+<input type="file" id="mobileImageInput" style="display:none;" accept="image/*" capture="environment">
+
+<!-- Main button -->
+<a id="mainBtn" class="cta-btn">Upload Image</a>
+
+<!-- Menu -->
+<div id="menu" class="menu">
+  <button onclick="document.getElementById('docInput').click()">📂 Upload Image</button>
+  <button  onclick="takeImage()">📷 Camera</button>
+</div>
+
+<!-- Desktop camera area -->
+<div id="cameraArea">
+  <video id="cameraStream" autoplay playsinline style="width:100%; height: 100vh; border:1px solid #ccc; border-radius:8px;"></video><br>
+  <button onclick="capturePhoto()">📸 Capture Photo</button>
+  <canvas id="canvas" style="display:none;"></canvas>
+</div>
+
+<!-- Preview -->
+<img id="preview" style="max-width:300px;display:none;margin-top:10px;border:1px solid #ccc;border-radius:8px;" />
+
+
+
+
+
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+
+      <hr>
+
+    <h2>Features</h2>
+    <div class="feature-container">
+      <div class="feature-card">
+        <h3>🌾 Easy to Use</h3>
+        <p>“Our platform is designed with simplicity in mind, ensuring farmers can easily access, understand, and use information without hassle.”</p>
+      </div>
+      <div class="feature-card">
+        <h3>🌍 Multi-Language</h3>
+        <p>“Our AI tool supports multiple languages, helping farmers access vital information in their preferred language for better understanding and usage.”</p>
+      </div>
+      <div class="feature-card">
+        <h3>⚡ Fast Response</h3>
+        <p>“Our AI chatbot delivers instant answers, ensuring farmers quickly receive accurate solutions without delays, saving their time and effort.”</p>
+      </div>
+      <div class="feature-card">
+        <h3>📊 History Panel</h3>
+        <p>“Our system saves complete chat history, allowing farmers to revisit previous conversations anytime for better tracking and informed decisions.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="contact">
+      <p>Email: info@kcckerala.in</p>
+      <p>Contact: 0651-2233549 | +91 87978 91222</p>
+    </div>
+    <div class="social">
+      <a href="#"><i class="fab fa-facebook"></i>🌐 Facebook</a>
+      <a href="#"><i class="fab fa-instagram"></i>📷 Instagram</a>
+      <a href="#"><i class="fab fa-linkedin"></i>💼 LinkedIn</a>
+      <a href="#"><i class="fab fa-twitter"></i>🐦 Twitter</a>
+    </div>
+  </footer>
+
+  <script>
+ 
+  const mainBtn = document.getElementById('mainBtn');
+  const menu = document.getElementById('menu');
+
+  // toggle menu under the button
+  mainBtn.addEventListener('click', e=>{
+    const rect = mainBtn.getBoundingClientRect();
+    menu.style.left = rect.left + 'px';
+    menu.style.top = (rect.bottom+window.scrollY) + 'px';
+    menu.style.display = menu.style.display==='block'?'none':'block';
+  });
+
+  // hide menu on outside click
+  document.addEventListener('click', e=>{
+    if(!menu.contains(e.target) && e.target!==mainBtn){
+      menu.style.display='none';
+    }
+  });
+
+  // doc input event
+  document.getElementById('docInput').addEventListener('change', e=>{
+    const file=e.target.files[0];
+    if(file){alert('Document selected: '+file.name);}
+  });
+
+  // mobile image input event + preview
+  document.getElementById('mobileImageInput').addEventListener('change', e=>{
+    const file=e.target.files[0];
+    if(file){
+      const reader=new FileReader();
+      reader.onload=ev=>{
+        const img=document.getElementById('preview');
+        img.src=ev.target.result;
+        img.style.display='block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // function for takeImage
+  function takeImage(){
+    // if mobile (simple detection)
+    if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+      document.getElementById('mobileImageInput').click();
+    } else {
+      // desktop: start camera
+      startDesktopCamera();
+    }
+  }
+
+  // desktop camera stream
+  function startDesktopCamera(){
+    const cameraArea=document.getElementById('cameraArea');
+    cameraArea.style.display='block';
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        document.getElementById('cameraStream').srcObject = stream;
+      })
+      .catch(err => {
+        alert("Camera not accessible: "+err);
+      });
+  }
+
+  // capture photo from desktop camera
+  function capturePhoto(){
+    const video=document.getElementById('cameraStream');
+    const canvas=document.getElementById('canvas');
+    canvas.width=video.videoWidth;
+    canvas.height=video.videoHeight;
+    canvas.getContext('2d').drawImage(video,0,0);
+    const dataUrl=canvas.toDataURL('image/png');
+    const img=document.getElementById('preview');
+    img.src=dataUrl;
+    img.style.display='block';
+  }
+
+</script>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
